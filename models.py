@@ -263,8 +263,8 @@ class CNN(torch.nn.Module):
         im1 = self.conv_layer(im1.view(-1, 1, 14, 14))
         d1 = self.linear_layer(im1.view(-1, 128))
 
-        im2 = self.conv_layer(im2.view(-1, 1, 14, 14))
-        d2 = self.linear_layer(im2.view(-1, 128))
+        im2 = self.conv_layer2(im2.view(-1, 1, 14, 14))
+        d2 = self.linear_layer2(im2.view(-1, 128))
         
         d1d2 = torch.cat([d1,d2], dim = 1)
         target = self.predictor(d1d2)
