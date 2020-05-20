@@ -9,9 +9,11 @@ class FNN_WS_AUX(torch.nn.Module):
         
         self.model = nn.Sequential(
             nn.Linear(196,196), 
+            nn.BatchNorm1d(num_features = 196),
             nn.ReLU(),
             nn.Linear(196,10), 
-            nn.Softmax(dim=1)
+            nn.BatchNorm1d(num_features = 10),
+            nn.Softmax(dim = 1)
         )
         
     def forward(self, im1, im2):
@@ -24,6 +26,7 @@ class FNN_WS_AUX(torch.nn.Module):
         #.float is necessary because loss function works with float.
         return d1, d2, one_hot
     
+    
 # WS+ no aux
 class FNN_WS(torch.nn.Module):
     def __init__(self):
@@ -31,16 +34,17 @@ class FNN_WS(torch.nn.Module):
         
         self.model = nn.Sequential(
             nn.Linear(196,196),
+            nn.BatchNorm1d(num_features = 196),
             nn.ReLU(),
             nn.Linear(196,10), 
-            nn.Softmax(dim=1)
+            nn.BatchNorm1d(num_features = 10),
+            nn.Softmax(dim = 1)
         )
         
         self.predictor = nn.Sequential(
             nn.Linear(20, 2),
             nn.Softmax(dim = 1)
         )
-        
         
     def forward(self, im1, im2):
         d1 = self.model(im1.view(-1, 196))
@@ -50,6 +54,7 @@ class FNN_WS(torch.nn.Module):
         target = self.predictor(d1d2)
         return None, None, target
     
+    
 # no WS+ aux
 class FNN_AUX(torch.nn.Module):
     def __init__(self):
@@ -57,19 +62,22 @@ class FNN_AUX(torch.nn.Module):
         
         self.model = nn.Sequential(
             nn.Linear(196,196), #1*14*14 -> 10*8*8
+            nn.BatchNorm1d(num_features = 196),
             nn.ReLU(),
             nn.Linear(196,10), #1*14*14 -> 10*8*8
+            nn.BatchNorm1d(num_features = 10),
             nn.Softmax(dim=1)
         )
         
         self.model2 = nn.Sequential(
             nn.Linear(196,196), #1*14*14 -> 10*8*8
+            nn.BatchNorm1d(num_features = 196),
             nn.ReLU(),
             nn.Linear(196,10), #1*14*14 -> 10*8*8
-            nn.Softmax(dim=1)
+            nn.BatchNorm1d(num_features = 10),
+            nn.Softmax(dim = 1)
         )
-        
-        
+
     def forward(self, im1, im2):
         d1 = self.model(im1.view(-1, 196))
         d2 = self.model2(im2.view(-1, 196))
@@ -78,6 +86,7 @@ class FNN_AUX(torch.nn.Module):
 
         return d1, d2, one_hot
     
+    
 # no WS+ no aux
 class FNN(torch.nn.Module):
     def __init__(self):
@@ -85,24 +94,27 @@ class FNN(torch.nn.Module):
         
         self.model = nn.Sequential(
             nn.Linear(196,196), #1*14*14 -> 10*8*8
+            nn.BatchNorm1d(num_features = 196),
             nn.ReLU(),
             nn.Linear(196,10), #1*14*14 -> 10*8*8
-            nn.Softmax(dim=1)
+            nn.BatchNorm1d(num_features = 10),
+            nn.Softmax(dim = 1)
         )
         
         self.model2 = nn.Sequential(
             nn.Linear(196,196), #1*14*14 -> 10*8*8
+            nn.BatchNorm1d(num_features = 196),
             nn.ReLU(),
             nn.Linear(196,10), #1*14*14 -> 10*8*8
-            nn.Softmax(dim=1)
+            nn.BatchNorm1d(num_features = 10),
+            nn.Softmax(dim = 1)
         )
         
         self.predictor = nn.Sequential(
             nn.Linear(20, 2),
+            nn.BatchNorm1d(num_features = 2),
             nn.Softmax(dim = 1)
         )
-        
-        
         
     def forward(self, im1, im2):
         d1 = self.model(im1.view(-1, 196))
@@ -119,18 +131,19 @@ class CNN_WS_AUX(torch.nn.Module):
         super(CNN_WS_AUX, self).__init__()
         
         self.conv_layer = nn.Sequential(
-            nn.Conv2d(1, 16, kernel_size =3), #1*14*14 -> 32*12 12
+            nn.Conv2d(1, 16, kernel_size = 3), #1*14*14 -> 32*12 12
+            nn.BatchNorm2d(16)
             nn.ReLU(),
-            nn.MaxPool2d(kernel_size = 2, stride=2), #   12 -> 6
+            nn.MaxPool2d(kernel_size = 2, stride = 2), #   12 -> 6
             nn.Conv2d(16, 32, kernel_size = 3, ), #4
-            nn.MaxPool2d(kernel_size = 2, stride=2), # 32*2*2   
+            nn.MaxPool2d(kernel_size = 2, stride = 2), # 32*2*2   
         )
         
         self.linear_layer = nn.Sequential(
             nn.Linear(128, 10),
+            nn.BatchNorm1d(num_features = 10),
             nn.Softmax(dim=1)
         )
-        
         
     def forward(self, im1, im2):
         im1 = self.conv_layer(im1.view(-1, 1, 14, 14))
@@ -143,6 +156,7 @@ class CNN_WS_AUX(torch.nn.Module):
 
         return d1, d2, one_hot
     
+    
 # WS+ NO AUX
 class CNN_WS(torch.nn.Module):
     def __init__(self):
@@ -150,19 +164,22 @@ class CNN_WS(torch.nn.Module):
         
         self.conv_layer = nn.Sequential(
             nn.Conv2d(1, 16, kernel_size =3), #1*14*14 -> 32*12 12
+            nn.BatchNorm2d(16)
             nn.ReLU(),
-            nn.MaxPool2d(kernel_size = 2, stride=2), #   12 -> 6
+            nn.MaxPool2d(kernel_size = 2, stride = 2), #   12 -> 6
             nn.Conv2d(16, 32, kernel_size = 3, ), #4
-            nn.MaxPool2d(kernel_size = 2, stride=2), # 32*2*2   
+            nn.MaxPool2d(kernel_size = 2, stride = 2), # 32*2*2   
         )
         
         self.linear_layer = nn.Sequential(
             nn.Linear(128, 10),
-            nn.Softmax(dim=1)
+            nn.BatchNorm1d(num_features = 10),
+            nn.Softmax(dim = 1)
         )
         
         self.predictor = nn.Sequential(
             nn.Linear(20, 2),
+            nn.BatchNorm1d(num_features = 2),
             nn.Softmax(dim = 1)
         )
         
@@ -173,12 +190,11 @@ class CNN_WS(torch.nn.Module):
         im2 = self.conv_layer(im2.view(-1, 1, 14, 14))
         d2 = self.linear_layer(im2.view(-1, 128))
         
-        
-        
         d1d2 = torch.cat([d1,d2], dim = 1)
         target = self.predictor(d1d2)
         return None, None, target
-    
+   
+
 # no WS+AUX
 class CNN_AUX(torch.nn.Module):
     def __init__(self):
@@ -186,6 +202,7 @@ class CNN_AUX(torch.nn.Module):
         
         self.conv_layer = nn.Sequential(
             nn.Conv2d(1, 16, kernel_size =3), #1*14*14 -> 32*12 12
+            nn.BatchNorm2d(16)
             nn.ReLU(),
             nn.MaxPool2d(kernel_size = 2, stride=2), #   12 -> 6
             nn.Conv2d(16, 32, kernel_size = 3, ), #4
@@ -194,11 +211,13 @@ class CNN_AUX(torch.nn.Module):
         
         self.linear_layer = nn.Sequential(
             nn.Linear(128, 10),
+            nn.BatchNorm2d(10)
             nn.Softmax(dim=1)
         )
         
         self.conv_layer2 = nn.Sequential(
             nn.Conv2d(1, 16, kernel_size =3), #1*14*14 -> 32*12 12
+            nn.BatchNorm2d(16)
             nn.ReLU(),
             nn.MaxPool2d(kernel_size = 2, stride=2), #   12 -> 6
             nn.Conv2d(16, 32, kernel_size = 3, ), #4
@@ -207,6 +226,7 @@ class CNN_AUX(torch.nn.Module):
         
         self.linear_layer2 = nn.Sequential(
             nn.Linear(128, 10),
+            nn.BatchNorm2d(16)
             nn.Softmax(dim=1)
         )
         
@@ -229,6 +249,7 @@ class CNN(torch.nn.Module):
         
         self.conv_layer = nn.Sequential(
             nn.Conv2d(1, 16, kernel_size =3), #1*14*14 -> 32*12 12
+            nn.BatchNorm2d(16)
             nn.ReLU(),
             nn.MaxPool2d(kernel_size = 2, stride=2), #   12 -> 6
             nn.Conv2d(16, 32, kernel_size = 3, ), #4
@@ -237,11 +258,13 @@ class CNN(torch.nn.Module):
         
         self.linear_layer = nn.Sequential(
             nn.Linear(128, 10),
+            nn.BatchNorm2d(10)
             nn.Softmax(dim=1)
         )
         
         self.conv_layer2 = nn.Sequential(
             nn.Conv2d(1, 16, kernel_size =3), #1*14*14 -> 32*12 12
+            nn.BatchNorm2d(16)
             nn.ReLU(),
             nn.MaxPool2d(kernel_size = 2, stride=2), #   12 -> 6
             nn.Conv2d(16, 32, kernel_size = 3, ), #4
@@ -250,14 +273,15 @@ class CNN(torch.nn.Module):
         
         self.linear_layer2 = nn.Sequential(
             nn.Linear(128, 10),
+            nn.BatchNorm2d(10)
             nn.Softmax(dim=1)
         )
         
         self.predictor = nn.Sequential(
             nn.Linear(20, 2),
+            nn.BatchNorm2d(2)
             nn.Softmax(dim = 1)
         )
-
         
     def forward(self, im1, im2):
         im1 = self.conv_layer(im1.view(-1, 1, 14, 14))
