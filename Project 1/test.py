@@ -9,8 +9,6 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("model", help="one of the following: FNN, FNN_WS, FNN_AUX, FNN_WS_AUX, CNN, CNN_WS, CNN_AUX, CNN_WS_AUX")
 
-parser.add_argument("--plot", help="plot the loss and accuracy curves", action="store_true")
-
 args = parser.parse_args(args=None if sys.argv[1:] else ['--help'])
 
 torch.manual_seed(8)
