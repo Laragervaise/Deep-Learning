@@ -24,9 +24,9 @@ In this first project, we tested two main  architectures of neural networks: Ful
 In this second project, we designed a mini deep-learning framework, using only pytorch’s tensor operations and the standard math library. In particular, no neural-network modules or autograd was used.
 The framework allows to build networks combining the following:
 - Fully connected layers,
-- ReLU, LeakyReLU, Tanh, Sigmoid and Softmax \textbf{activation functions},
+- ReLU, LeakyReLU, Tanh, Sigmoid and Softmax activation functions,
 - Regularization methods such as batch normalization or the use of weight decay,
-- Exponential, time-based and step-decay \textbf{learning rate schedules},
-- MSE or Cross entropy \textbf{loss functions} (the latter including the Softmax activation function),
-- SGD, Adagrad, RMSProp or Momentum \textbf{optimizers},
-- Random, Zero, He or Xavier \textbf{weight initializations}.
+- Exponential, time-based and step-decay learning rate schedules,
+- MSE or Cross entropy loss functions (the latter including the Softmax activation function),
+- SGD, Adagrad, RMSProp or Momentum optimizers,
+- Random, Zero, He or Xavier weight initializations.
