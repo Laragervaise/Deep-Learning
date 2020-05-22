@@ -1,11 +1,11 @@
 from models import Module, Linear, Sequential, BatchNorm, ReLU, LeakyReLU, Tanh, Sigmoid
 from torch import set_grad_enabled, clamp, matmul, Tensor, sum,\
-ones, randn, empty, max, exp, addmm, log, zeros_like, zeros, manual_seed, stack, flatten, mean, var
+ones, randn, empty, max, exp, addmm, log, zeros, manual_seed, stack, flatten, mean, var
 from torch.nn.init import normal_
 from random import uniform
-from math import pi, sqrt
-import math
 import random
+from math import pi, sqrt
+import math  # whole import of math to not mix with the torch functions
 
 # Turn off autograd
 set_grad_enabled(False)
