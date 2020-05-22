@@ -28,7 +28,7 @@ elif args.model.upper() == 'FNN_AUX':
 	history = train(model_FNN_AUX, train_input1, train_input2, train_classes1,  train_classes2,train_target, \
                         test_input1, test_input2, test_classes1, test_classes2,  test_target)
 elif args.model.upper() == 'FNN_WS_AUX':
-	history = train(model_FNN_AUX, train_input1, train_input2, train_classes1,  train_classes2,train_target, \
+	history = train(model_FNN_WS_AUX, train_input1, train_input2, train_classes1,  train_classes2,train_target, \
                         test_input1, test_input2, test_classes1, test_classes2,  test_target)
 elif args.model.upper() == 'CNN':
 	history = train(model_CNN, train_input1, train_input2, train_classes1,  train_classes2,train_target, \
