@@ -259,8 +259,7 @@ def train(model, train_pts, train_targets, n_epoch, lr0, test_pts = [], test_tar
                 test_loss, _ = crossEntropyLoss(test_pred, test_targets.view(-1, 2))
             else:
                 raise NotImplementedError("Criterion not implemented")
-            
-            #test_loss += wd * (w**2).sum()/2
+                
             test_losses.append(test_loss.item())
             test_accs.append(compute_acc(model, test_pts, test_labels, test_pred))
             

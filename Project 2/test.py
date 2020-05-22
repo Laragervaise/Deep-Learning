@@ -29,11 +29,13 @@ criterions = ['MSE', 'CROSSENTROPY', 'CROSSENTROPY', 'CROSSENTROPY', 'CROSSENTRO
 learning_decay_types = ['exponential', 'exponential', 'time-based', 'exponential', \
                         'exponential', 'exponential', 'time-based', 'exponential', 'exponential']
 
+
+# Model selection
+
 parser = argparse.ArgumentParser()
 
 parser.add_argument("model", help="one of the following: RELU, RELU_SIGMOID, RELU_TANH, RELU_SOFTMAX, LEAKY_RELU, LEAKY_RELU_SIGMOID, LEAKY_RELU_TANH, LEAKY_RELU_SOFTMAX, TANH")
 
-#parser.add_argument("--plot", help="plot the loss and accuracy curves", action="store_true")
 
 args = parser.parse_args(args=None if sys.argv[1:] else ['--help'])
 

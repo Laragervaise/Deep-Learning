@@ -4,6 +4,7 @@ import torch
 from models import *
 import matplotlib.pyplot as plt
 
+# Generate the data pairs
 def generate_pair_sets(nb):
     data_dir = os.environ.get('PYTORCH_DATA_DIR')
     if data_dir is None:
@@ -46,7 +47,6 @@ def load():
     train_input, train_target, train_classes, test_input, test_target, test_classes = generate_pair_sets(size)
 
     #normalization
-    #check https://stats.stackexchange.com/questions/174823/
     mu, std = train_input.mean(), train_input.std()
     train_input, test_input = train_input.sub(mu).div(std), test_input.sub(mu).div(std)
 
@@ -63,7 +63,7 @@ def load():
     return inputs
 
 
-
+# Mini-batch generator
 def data_generator(input1, input2, digits1, digits2, targets, batch_size):
     data_len = input1.size(0)
     i = 0
@@ -252,7 +252,7 @@ def cross_val_score(input1, input2, digits1, digits2, targets, model_constructor
         acc_target += accs[0]
         acc_d1 += accs[1]
         acc_d2 += accs[2]
-        #print('fold=', k, ' loss = ', history['loss_history'][-1])
+        
     return (acc_target / k_folds, acc_d1 /k_folds, acc_d2 /k_folds)
 
 
@@ -312,7 +312,6 @@ def plotacc(mean_histories, line_label):
     for i, mean_test_acc in enumerate(test_mean_acc):
 
         ax.plot(mean_test_acc, alpha=0.5, color = colors[i], linewidth = 2.0, label = line_label)
-        #ax.fill_between(range(len(mean_test_acc)), mean_test_acc - std_test_acc, mean_test_acc + std_test_acc, color = colors[i], alpha=0.2)
 
     ax.legend(loc='best', facecolor = 'white')
     ax.set_ylabel('Accuracy')

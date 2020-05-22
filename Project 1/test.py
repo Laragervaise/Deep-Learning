@@ -3,9 +3,9 @@ import argparse
 import sys
 import torch
 
+# Model selection
 
 parser = argparse.ArgumentParser()
-
 
 parser.add_argument("model", help="one of the following: FNN, FNN_WS, FNN_AUX, FNN_WS_AUX, CNN, CNN_WS, CNN_AUX, CNN_WS_AUX")
 
