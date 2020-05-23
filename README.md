@@ -29,4 +29,4 @@ The framework allows to build networks combining the following:
 - Exponential, time-based and step-decay learning rate schedules,
 - MSE or Cross entropy loss functions (the latter including the Softmax activation function),
 - SGD, Adagrad, RMSProp or Momentum optimizers,
-- Random, Zero, He or Xavier weight initializations.
+- Random, Zero, He or Xavie initializations.
